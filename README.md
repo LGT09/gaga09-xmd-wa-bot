@@ -69,22 +69,22 @@ Deploy your Gaga09 XMD Bot instantly with these platforms:
 
 <p align="center">
   <!-- Railway -->
-  <a href="https://railway.app/new/template?template=https://github.com/LGT09/Gaga09XMD&envs=SESSION_ID,OWNER_NAME,OWNER_NUMBERS&SESSION_IDDesc=Your+WhatsApp+Session+ID&OWNER_NAMEDesc=Bot+Owner+Name&OWNER_NUMBERSDesc=Owner+Phone+Numbers">
+  <a href="https://railway.app/new/template?template=https://github.com/LGT09/gaga09-xmd-wa-bot&envs=SESSION_ID,OWNER_NAME,OWNER_NUMBERS&SESSION_IDDesc=Your+WhatsApp+Session+ID&OWNER_NAMEDesc=Bot+Owner+Name&OWNER_NUMBERSDesc=Owner+Phone+Numbers">
     <img src="https://railway.app/button.svg" alt="Deploy on Railway"/>
   </a>
   &nbsp;&nbsp;
   <!-- Replit -->
-  <a href="https://replit.com/github/LGT09/Gaga09XMD">
+  <a href="https://replit.com/github/LGT09/gaga09-xmd-wa-bot">
     <img src="https://img.shields.io/badge/Deploy%20to%20Replit-orange?style=for-the-badge&logo=replit" alt="Deploy on Replit"/>
   </a>
   &nbsp;&nbsp;
   <!-- Heroku -->
-  <a href="https://heroku.com/deploy?template=https://github.com/LGT09/Gaga09XMD">
+  <a href="https://heroku.com/deploy?template=https://github.com/LGT09/gaga09-xmd-wa-bot">
     <img src="https://img.shields.io/badge/Deploy%20to%20Heroku-430098?style=for-the-badge&logo=heroku" alt="Deploy on Heroku"/>
   </a>
   &nbsp;&nbsp;
   <!-- Render -->
-  <a href="https://render.com/deploy?repo=https://github.com/LGT09/Gaga09XMD">
+  <a href="https://render.com/deploy?repo=https://github.com/LGT09/gaga09-xmd-wa-bot">
     <img src="https://img.shields.io/badge/Deploy%20to%20Render-46E3B7?style=for-the-badge&logo=render" alt="Deploy on Render"/>
   </a>
 </p>  
