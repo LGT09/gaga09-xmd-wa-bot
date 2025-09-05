@@ -41,8 +41,8 @@ The most powerful multifunctional WhatsApp Bot with 500+ commands, AI integratio
 
 1. Clone Repo
 
-git clone https://github.com/LGT09/Gaga09XMD.git
-cd Gaga09XMD
+git clone https://github.com/LGT09/gaga09-xmd-wa-bot.git
+cd gaga09-xmd-wa-bot 
 
 2. Install Dependencies
 
@@ -123,3 +123,5 @@ Vincent Ganiza a.k.a Lil Gaga Traxx09
 <p align="center">
   <img src="https://files.catbox.moe/4d68yb.jpg" width="400px" alt="Gaga09 XMD Footer"/>
 </p>
+
+Get your SESSION_ID on https://gagasession-e3fe5a4abecd.herokuapp.com/pair
