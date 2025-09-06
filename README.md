@@ -3,9 +3,9 @@
 <p align="center">
   <img src="https://files.catbox.moe/4d68yb.jpg" width="600px" alt="Gaga09 XMD Banner"/>
 </p>  <p align="center">
-  <a href="https://github.com/LGT09/Gaga09XMD"><img src="https://img.shields.io/github/stars/LGT09/Gaga09XMD?style=for-the-badge&logo=github" alt="GitHub Stars"/></a>
-  <a href="https://github.com/LGT09/Gaga09XMD/fork"><img src="https://img.shields.io/github/forks/LGT09/Gaga09XMD?style=for-the-badge&logo=git" alt="GitHub Forks"/></a>
-  <a href="https://github.com/LGT09/Gaga09XMD/issues"><img src="https://img.shields.io/github/issues/LGT09/Gaga09XMD?style=for-the-badge&logo=bugcrowd" alt="Issues"/></a>
+  <a href="https://github.com/LGT09/gaga09-xmd-wa-bot"><img src="https://img.shields.io/github/stars/LGT09/gaga09-xmd-wa-bot?style=for-the-badge&logo=github" alt="GitHub Stars"/></a>
+  <a href="https://github.com/LGT09/gaga09-xmd-wa-bot/fork"><img src="https://img.shields.io/github/forks/LGT09/gaga09-xmd-wa-bot?style=for-the-badge&logo=git" alt="GitHub Forks"/></a>
+  <a href="https://github.com/LGT09/gaga09-xmd-wa-bot/issues"><img src="https://img.shields.io/github/issues/LGT09/gaga09-xmd-wa-bot?style=for-the-badge&logo=bugcrowd" alt="Issues"/></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js" alt="Node.js"/></a>
 </p>  > Created by Lil Gaga Traxx09 © 2025 — Gaga is the King
 The most powerful multifunctional WhatsApp Bot with 500+ commands, AI integration, media tools, group management, and more.
