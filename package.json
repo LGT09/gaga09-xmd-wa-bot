@@ -19,7 +19,7 @@
     "ytdl-core": "^4.11.5",
     "youtube-search-api": "^1.2.0",
     "axios": "^1.6.7",
-    "jimp": "0.16.1",
+    "jimp": "0.22.12",
     "qrcode": "^1.5.3",
     "bible-references": "^2.0.0"
   },
