@@ -1,0 +1,51 @@
+{
+  "name": "gaga09-xmd-whatsapp-bot",
+  "description": "A powerful WhatsApp bot with 500+ commands built with Baileys and Node.js. Created by Lil Gaga Traxx09 ©️ 2025 — Gaga is the King.",
+  "repository": "https://github.com/yourusername/gaga09-xmd-bot",
+  "logo": "https://files.catbox.moe/nld69x.jpg",
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "baileys",
+    "nodejs",
+    "gaga09",
+    "lilgagatraxx09",
+    "whatsapp-bot",
+    "multi-device",
+    "500-commands"
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production",
+      "required": true
+    },
+    "PORT": {
+      "description": "Port to run the application on",
+      "value": "8000",
+      "required": false
+    },
+    "SESSION_NAME": {
+      "description": "Name for the WhatsApp session file",
+      "value": "gaga09_session",
+      "required": false
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "scripts": {
+    "postdeploy": "echo 'WhatsApp Bot deployed successfully! Scan the QR code in logs to connect your account.'"
+  },
+  "addons": [],
+  "stack": "container",
+  "image": "heroku/nodejs"
+}
