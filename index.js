@@ -45,7 +45,7 @@ const {
   const path = require('path')
   const prefix = config.PREFIX
   // const { commands } = require('./command');
-  const ownerNumber = ['923493114170']
+  const ownerNumber = ['263716857999']
 
   //=============================================
   const tempDir = path.join(os.tmpdir(), 'cache-temp')
