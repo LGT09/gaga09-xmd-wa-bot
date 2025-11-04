@@ -1,27 +1,26 @@
-exports.run = {
-   async: async (m, {
-      client,
-      body,
-      isOwner,
-      groupSet,
-      Func
-   }) => {
-      try {
-         if (m.msg && m.msg.viewOnce && !isOwner && groupSet.viewonce) {
-            let media = await client.downloadMediaMessage(m.msg)
-            if (/image/.test(m.mtype)) {
-               client.sendFile(m.chat, media, Func.filename('jpg'), body ? body : '', m)
-            } else if (/video/.test(m.mtype)) {
-               client.sendFile(m.chat, media, Func.filename('mp4'), body ? body : '', m)
-            }
-         }
-      } catch (e) {
-         console.log(e)
-         return client.reply(m.chat, Func.jsonFormat(e), m)
-      }
-   },
-   error: false,
-   group: true,
-   cache: true,
-   location: __filename
+const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
+
+async function viewonceCommand(sock, chatId, message) {
+    // Extract quoted imageMessage or videoMessage from your structure
+    const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+    const quotedImage = quoted?.imageMessage;
+    const quotedVideo = quoted?.videoMessage;
+
+    if (quotedImage && quotedImage.viewOnce) {
+        // Download and send the image
+        const stream = await downloadContentFromMessage(quotedImage, 'image');
+        let buffer = Buffer.from([]);
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);
+        await sock.sendMessage(chatId, { image: buffer, fileName: 'media.jpg', caption: quotedImage.caption || '' }, { quoted: message });
+    } else if (quotedVideo && quotedVideo.viewOnce) {
+        // Download and send the video
+        const stream = await downloadContentFromMessage(quotedVideo, 'video');
+        let buffer = Buffer.from([]);
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);
+        await sock.sendMessage(chatId, { video: buffer, fileName: 'media.mp4', caption: quotedVideo.caption || '' }, { quoted: message });
+    } else {
+        await sock.sendMessage(chatId, { text: '❌ Please reply to a view-once image or video.' }, { quoted: message });
+    }
 }
+
+module.exports = viewonceCommand; 
