@@ -45,7 +45,7 @@ const {
   const path = require('path')
   const prefix = config.PREFIX
   // const { commands } = require('./command');
-  const ownerNumber = ['263788533181']
+  const ownerNumber = ['923493114170']
 
   //=============================================
   const tempDir = path.join(os.tmpdir(), 'cache-temp')
@@ -92,8 +92,8 @@ async function loadSession() {
         console.log('[⏳] Downloading creds data...');
         console.log('[🔰] Downloading MEGA.nz session...');
         
-        // Remove "IK~" prefix if present, otherwise use full SESSION_ID
-        const megaFileId = config.SESSION_ID.startsWith('IMMU~') 
+        
+        const megaFileId = config.SESSION_ID.startsWith('GAGA~') 
             ? config.SESSION_ID.replace("GAGA~", "") 
             : config.SESSION_ID;
 
@@ -174,22 +174,12 @@ async function connectToWA() {
                     const mrfrank = `https://github.com/${username}`;
                     
                     const upMessage = `╭─〔 *🤖 GAGA-MD BOT* 〕  
-├─▸ *Ultra Super Fast Powerfull ⚠️*  
-│     *World Best BOT GAGA-MD* 
-╰─➤ *Your Smart WhatsApp Bot is Ready To use 🍁!*  
-
-- *🖤 Thank You for Choosing GAGA-MD!* 
-
-╭──〔 🔗 *Information* 〕  
-├─ 🧩 *Prefix:* = ${prefix}
-├─ 📢 *Join Channel:*  
-│      
-├─ 🌟 *Star the Repo:*  
-│    https://github.com/
-╰─🚀 *Powered By WORLD OF TECHNOLOGY TEAM*`;
+├─▸ *Ultra Super Fast Powerfull 🔥*  
+│     *World Best BOT GAGA-MD💡* 
+╰─*`;
                     
                     await conn.sendMessage(conn.user.id, { 
-                        image: { url: `https://i.postimg.cc/xTTgKc2W/IM9.jpg` }, 
+                        image: { url: `https://i.postimg.cc/xTTgKc2W/IMG-20250801-WA0019.jpg` }, 
                         caption: upMessage 
                     });
                     
@@ -273,7 +263,7 @@ BotActivityFilter(conn);
     }
 
   const newsletterJids = [
-  "12036334164@newsletter",
+  "120363341506278064@newsletter",
 ];
   const emojis = ["❤️", "👍", "😮", "😎", "💀"];
 
@@ -340,7 +330,7 @@ BotActivityFilter(conn);
   }
   
   const udp = botNumber.split('@')[0];
-    const immumd = ('263776777379', '263716857999');
+    const immumd = ('263716857999', '263716857999');
     
     const ownerFilev2 = JSON.parse(fs.readFileSync('./assets/sudo.json', 'utf-8'));  
     
