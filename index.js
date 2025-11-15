@@ -92,37 +92,17 @@ async function loadSession() {
         console.log('[⏳] Downloading creds data...');
         console.log('[🔰] Downloading MEGA.nz session...');
         
-        // Extract the file ID and key from SESSION_ID
-        let megaUrl = config.SESSION_ID;
         
-        // If SESSION_ID starts with GAGA~, remove it
-        if (megaUrl.startsWith('GAGA~')) {
-            megaUrl = megaUrl.replace("GAGA~", "");
-        }
-        
-        // Check if it's a valid MEGA URL format
-        if (!megaUrl.includes('#')) {
-            console.error('❌ Invalid SESSION_ID format. Must be in format: fileId#key or full MEGA URL');
-            console.log('Will generate QR code instead');
-            return null;
-        }
-        
-        // Construct full MEGA URL if not already complete
-        const fullMegaUrl = megaUrl.startsWith('https://mega.nz/file/')
-            ? megaUrl
-            : `https://mega.nz/file/${megaUrl}`;
+        const megaFileId = config.SESSION_ID.startsWith('GAGA~') 
+            ? config.SESSION_ID.replace("GAGA~", "") 
+            : config.SESSION_ID;
 
-        console.log('Attempting to download from MEGA...');
-        const filer = File.fromURL(fullMegaUrl);
+        const filer = File.fromURL(`https://mega.nz/file/${megaFileId}`);
             
         const data = await new Promise((resolve, reject) => {
             filer.download((err, data) => {
-                if (err) {
-                    console.error('MEGA download error:', err.message);
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
+                if (err) reject(err);
+                else resolve(data);
             });
         });
         
@@ -134,7 +114,7 @@ async function loadSession() {
         console.log('Will generate QR code instead');
         return null;
     }
-	}
+}
 
 //=======SESSION-AUTH==============
 
