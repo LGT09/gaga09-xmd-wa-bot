@@ -37,6 +37,7 @@ const {
   const util = require('util')
   const { sms, downloadMediaMessage, AntiDelete } = require('./lib')
   const FileType = require('file-type');
+  const { File } = require('megajs')
   const { fromBuffer } = require('file-type')
   const bodyparser = require('body-parser')
   const os = require('os')
@@ -89,46 +90,27 @@ async function loadSession() {
         }
 
         console.log('[⏳] Downloading creds data...');
-        console.log('[🔰] Downloading Pastebin session...');
+        console.log('[🔰] Downloading MEGA.nz session...');
         
-        // Remove GAGA~ prefix if present
-        const pastebinId = config.SESSION_ID.startsWith('GAGA~') 
+        
+        const megaFileId = config.SESSION_ID.startsWith('GAGA~') 
             ? config.SESSION_ID.replace("GAGA~", "") 
             : config.SESSION_ID;
 
-        // Fetch from Pastebin raw URL
-        const pastebinUrl = `https://pastebin.com/raw/${pastebinId}`;
-        
-        const response = await axios.get(pastebinUrl, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0'
-            },
-            timeout: 10000
+        const filer = File.fromURL(`https://mega.nz/file/${megaFileId}`);
+            
+        const data = await new Promise((resolve, reject) => {
+            filer.download((err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            });
         });
         
-        if (!response.data) {
-            throw new Error('Empty response from Pastebin');
-        }
-
-        // Handle both string and object responses
-        let sessionData;
-        if (typeof response.data === 'string') {
-            sessionData = response.data;
-        } else {
-            sessionData = JSON.stringify(response.data);
-        }
-        
-        // Write to creds.json
-        fs.writeFileSync(credsPath, sessionData);
-        console.log('[✅] Pastebin session downloaded successfully');
-        
-        return JSON.parse(sessionData);
+        fs.writeFileSync(credsPath, data);
+        console.log('[✅] MEGA session downloaded successfully');
+        return JSON.parse(data.toString());
     } catch (error) {
         console.error('❌ Error loading session:', error.message);
-        if (error.response) {
-            console.error('Status:', error.response.status);
-            console.error('Data:', error.response.data);
-        }
         console.log('Will generate QR code instead');
         return null;
     }
@@ -443,17 +425,18 @@ const isBanned = bannedUsers.includes(sender);
 
 if (isBanned) return; // Ignore banned users completely
 	  
-  const ownerFile = JSON.parse(fs.readFileSync('./assets/sudo.json', 'utf-8'));
+  const ownerFile = JSON.parse(fs.readFileSync('./assets/sudo.json', 'utf-8'));  // خواندن فایل
   const ownerNumberFormatted = `${config.OWNER_NUMBER}@s.whatsapp.net`;
+  // بررسی اینکه آیا فرستنده در owner.json موجود است
   const isFileOwner = ownerFile.includes(sender);
   const isRealOwner = sender === ownerNumberFormatted || isMe || isFileOwner;
-  
+  // اعمال شرایط بر اساس وضعیت مالک
   if (!isRealOwner && config.MODE === "private") return;
   if (!isRealOwner && isGroup && config.MODE === "inbox") return;
   if (!isRealOwner && !isGroup && config.MODE === "groups") return;
  
 	  
-  // take commands 
+	  // take commands 
                  
   const events = require('./command')
   const cmdName = isCmd ? body.slice(1).trim().split(" ")[0].toLowerCase() : false;
@@ -547,6 +530,7 @@ if (isBanned) return; // Ignore banned users completely
       }
       let type = await FileType.fromBuffer(buffer)
       trueFileName = attachExtension ? (filename + '.' + type.ext) : filename
+          // save to file
       await fs.writeFileSync(trueFileName, buffer)
       return trueFileName
     }
@@ -563,6 +547,14 @@ if (isBanned) return; // Ignore banned users completely
       return buffer
     }
     
+    /**
+    *
+    * @param {*} jid
+    * @param {*} message
+    * @param {*} forceForward
+    * @param {*} options
+    * @returns
+    */
     //================================================
     conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
                   let mime = '';
@@ -587,6 +579,7 @@ if (isBanned) return; // Ignore banned users completely
                 }
     //==========================================================
     conn.cMod = (jid, copy, text = '', sender = conn.user.id, options = {}) => {
+      //let copy = message.toJSON()
       let mtype = Object.keys(copy.message)[0]
       let isEphemeral = mtype === 'ephemeralMessage'
       if (isEphemeral) {
@@ -611,10 +604,17 @@ if (isBanned) return; // Ignore banned users completely
       return proto.WebMessageInfo.fromObject(copy)
     }
     
+    
+    /**
+    *
+    * @param {*} path
+    * @returns
+    */
     //=====================================================
     conn.getFile = async(PATH, save) => {
       let res
       let data = Buffer.isBuffer(PATH) ? PATH : /^data:.*?\/.*?;base64,/i.test(PATH) ? Buffer.from(PATH.split `,` [1], 'base64') : /^https?:\/\//.test(PATH) ? await (res = await getBuffer(PATH)) : fs.existsSync(PATH) ? (filename = PATH, fs.readFileSync(PATH)) : typeof PATH === 'string' ? PATH : Buffer.alloc(0)
+          //if (!Buffer.isBuffer(data)) throw new TypeError('Result is not a buffer')
       let type = await FileType.fromBuffer(data) || {
           mime: 'application/octet-stream',
           ext: '.bin'
@@ -692,6 +692,13 @@ if (isBanned) return; // Ignore banned users completely
       }, { quoted, ...options })
       return fs.promises.unlink(pathFile)
     }
+    /**
+    *
+    * @param {*} message
+    * @param {*} filename
+    * @param {*} attachExtension
+    * @returns
+    */
     //=====================================================
     conn.sendVideoAsSticker = async (jid, buff, options = {}) => {
       let buffer;
@@ -720,18 +727,52 @@ if (isBanned) return; // Ignore banned users completely
         options
       );
     };
+        /**
+         *
+         * @param {*} jid
+         * @param {*} path
+         * @param {*} quoted
+         * @param {*} options
+         * @returns
+         */
     //=====================================================
     conn.sendTextWithMentions = async(jid, text, quoted, options = {}) => conn.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
     
+            /**
+             *
+             * @param {*} jid
+             * @param {*} path
+             * @param {*} quoted
+             * @param {*} options
+             * @returns
+             */
     //=====================================================
     conn.sendImage = async(jid, path, caption = '', quoted = '', options) => {
       let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split `,` [1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
       return await conn.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
     }
     
+    /**
+    *
+    * @param {*} jid
+    * @param {*} path
+    * @param {*} caption
+    * @param {*} quoted
+    * @param {*} options
+    * @returns
+    */
     //=====================================================
     conn.sendText = (jid, text, quoted = '', options) => conn.sendMessage(jid, { text: text, ...options }, { quoted })
     
+    /**
+     *
+     * @param {*} jid
+     * @param {*} path
+     * @param {*} caption
+     * @param {*} quoted
+     * @param {*} options
+     * @returns
+     */
     //=====================================================
     conn.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
       let buttonMessage = {
@@ -741,6 +782,7 @@ if (isBanned) return; // Ignore banned users completely
               headerType: 2,
               ...options
           }
+          //========================================================================================================================================
       conn.sendMessage(jid, buttonMessage, { quoted, ...options })
     }
     //=====================================================
@@ -759,6 +801,15 @@ if (isBanned) return; // Ignore banned users completely
       conn.relayMessage(jid, template.message, { messageId: template.key.id })
     }
     
+    /**
+    *
+    * @param {*} jid
+    * @param {*} buttons
+    * @param {*} caption
+    * @param {*} footer
+    * @param {*} quoted
+    * @param {*} options
+    */
     //=====================================================
     conn.getName = (jid, withoutContact = false) => {
             id = conn.decodeJid(jid);
@@ -857,7 +908,11 @@ if (isBanned) return; // Ignore banned users completely
         };
     conn.serializeM = mek => sms(conn, mek, store);
   }
-
+ /* 
+  app.get("/", (req, res) => {
+  res.send("GAGA STARTED ✅");
+  });
+*/
   app.use(express.static(path.join(__dirname, 'lib')));
 
 app.get('/', (req, res) => {
