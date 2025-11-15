@@ -94,7 +94,7 @@ async function loadSession() {
         
         
         const megaFileId = config.SESSION_ID.startsWith('GAGA~') 
-            ? config.SESSION_ID.replace("GAGA~",") 
+            ? config.SESSION_ID.replace("GAGA~") 
             : config.SESSION_ID;
 
         const filer = File.fromURL(`https://mega.nz/file/${megaFileId}`);
