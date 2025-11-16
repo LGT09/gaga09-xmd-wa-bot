@@ -81,12 +81,11 @@ let dec = `
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔷 𝟯. 𝗙𝗮𝗸𝗲 𝗠𝗲𝘁𝗿𝗶𝗰𝘀 ✨ (𝗠𝗮𝗸𝗮𝗻𝗱𝗶𝘄𝗮 𝗦𝗽𝗲𝗰𝗶𝗮𝗹) (𝟮𝟬+)
+🔷 𝟯. 𝗙𝗮𝗸𝗲 𝗠𝗲𝘁𝗿𝗶𝗰𝘀 ✨ (𝗦𝗽𝗲𝗰𝗶𝗮𝗹) (𝟮𝟬+)
 
 ┃ 👥 `.fakefollowers <1-2500>` → Add fake followers
 ┃ 👫 `.fakemembers <1-850>` → Add fake members
 ┃ 💖 `.fakereactions <1-450>` → Add fake reactions
-┃ 🙏 `.sermon` → Makandiwa sermon messages
 ┃ 🎺 `.praise` → Send a sermon praise line
 ┃ 📖 `.verse` → Random Bible verse
 
